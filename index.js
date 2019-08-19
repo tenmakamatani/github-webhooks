@@ -24,5 +24,5 @@ handler.on("error", (err) => {
 
 handler.on("push", (event) => {
     const payload = event.payload;
-    console.log(payload);
+    console.log(payload.commits);
 });
