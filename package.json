@@ -1,0 +1,23 @@
+{
+  "name": "github-webhooks",
+  "version": "1.0.0",
+  "description": "GitHubのWebhookを受け取ります",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tenmakamatani/github-webhooks.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tenmakamatani/github-webhooks/issues"
+  },
+  "homepage": "https://github.com/tenmakamatani/github-webhooks#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
