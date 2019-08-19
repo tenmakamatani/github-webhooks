@@ -10,19 +10,6 @@ const handler = createHandler({
     secret: process.env.SECRET_KEY
 });
 
-// nodemailerの導入
-const nodeMailer = require("nodemailer");
-const smtpConfig = {
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-        user: process.env.MAIL_ADDRESS_FROM,
-        pass: process.env.GOOGLE_ACCOUNT_PASSWORD
-    }
-};
-const transporter = nodeMailer.createTransport(smtpConfig);
-
 http.createServer((req, res) => {
     handler(req, res, (err) => {
         res.statusCode = 404;
@@ -42,13 +29,5 @@ handler.on("push", (event) => {
     }
     message = message + "URL: " + payload.repository.url;
 
-    const sendMessage = {
-        from: process.env.MAIL_ADDRESS_FROM,
-        to: process.env.MAIL_ADDRESS_TO,
-        subject: "GitHub push通知",
-        text: message
-    };
-    transporter.sendMail(sendMessage, (err, res) => {
-        console.log(err || res);
-    });
+    console.log(message);
 });
