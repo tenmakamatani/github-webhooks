@@ -24,5 +24,9 @@ handler.on("error", (err) => {
 
 handler.on("push", (event) => {
     const payload = event.payload;
-    console.log(payload.commits);
+    let message = payload.repository.name + "レポジトリにpushされました。\n";
+    for (let i = 0; i < payload.commits.length; i++) {
+        message = message + "Commit: " + payload.commits[i].message + " by " + payload.commits[i].commiter.name + "\n";
+    }
+    console.log(message);
 });
