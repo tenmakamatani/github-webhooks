@@ -3,12 +3,25 @@
 const http = require("http");
 const PORT = process.env.PORT || 8000;
 
-// github-webhook-handlerを導入
+// github-webhook-handler導入
 const createHandler = require("github-webhook-handler");
 const handler = createHandler({
     path: "/post",
     secret: process.env.SECRET_KEY
 });
+
+// nodemailer導入
+const nodeMailer = require("nodemailer");
+const smtpConfig = {
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.MAIL_ADDRESS_FROM,
+        pass: process.env.GOOGLE_ACCOUNT_PASSWORD
+    }
+};
+const transporter = nodeMailer.createTransport(smtpConfig);
 
 http.createServer((req, res) => {
     handler(req, res, (err) => {
@@ -28,5 +41,14 @@ handler.on("push", (event) => {
         message = message + "Commit: " + payload.commits[i].message + " by " + payload.commits[i].committer.name + "\n";
     }
     message = message + "URL: " + payload.repository.url;
-    console.log(message);
+
+    const sendMessage = {
+        from: process.env.MAIL_ADDRESS_FROM,
+        to: process.env.MAIL_ADDRESS_TO,
+        subject: "GitHub push通知",
+        text: message
+    };
+    transporter.sendMail(sendMessage, (err, res) => {
+        console.log(err || res);
+    });
 });
