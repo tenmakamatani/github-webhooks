@@ -9,15 +9,12 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// 普通にアクセスされた時はwelcomeと表示する
-app.get("/", (req, res) => {
-    res.send("welcome");
-});
+// express-github-webhook導入
+const expressGithubWebhook = require("express-github-webhook");
+const webhookHandler = expressGithubWebhook({ path: "/post", secret: "secret" });
+app.use(webhookHandler);
 
-app.post("/post", (req, res) => {
-    console.log(req);
-});
-
-app.listen(PORT, () => {
-    console.log(`Listening on PORT ${PORT}`);
+webhookHandler.on("event", (repo, data) => {
+    console.log(`repogitory: ${repo}`);
+    console.log(data);
 });
