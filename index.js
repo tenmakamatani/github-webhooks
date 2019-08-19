@@ -3,14 +3,14 @@
 const http = require("http");
 const PORT = process.env.PORT || 8000;
 
-// github-webhook-handler導入
+// github-webhook-handlerの導入
 const createHandler = require("github-webhook-handler");
 const handler = createHandler({
     path: "/post",
     secret: process.env.SECRET_KEY
 });
 
-// nodemailer導入
+// nodemailerの導入
 const nodeMailer = require("nodemailer");
 const smtpConfig = {
     host: "smtp.gmail.com",
