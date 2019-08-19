@@ -2,7 +2,6 @@
 
 const http = require("http");
 const PORT = process.env.PORT || 8000;
-const REPOSITORY_NAME = "github-webhooks";
 
 // github-webhook-handlerを導入
 const createHandler = require("github-webhook-handler");
