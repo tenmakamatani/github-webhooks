@@ -9,5 +9,5 @@ app.post("/post", (req, res) => {
 });
 
 app.listen(PORT, () => {
-    onsole.log(`Listening on PORT ${PORT}`);
+    console.log(`Listening on PORT ${PORT}`);
 });
