@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/post", (req, res) => {
-    console.log(req.body.payload);
+    console.log(req.payload);
 });
 
 app.listen(PORT, () => {
