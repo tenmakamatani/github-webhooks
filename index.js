@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.post("/post", (req, res) => {
-    console.log(req.body);
+    console.log(req.body.action);
 });
 
 app.listen(PORT, () => {
