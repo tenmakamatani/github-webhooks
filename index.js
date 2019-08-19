@@ -1,20 +1,28 @@
 "use strict";
 
-const express = require("express");
-const app = express();
+const http = require("http");
 const PORT = process.env.PORT || 8000;
+const REPOSITORY_NAME = "github-webhooks";
 
-// body-parserでPOSTリクエストを処理
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// github-webhook-handler導入
+const createHandler = require("github-webhook-handler");
+const handler = createHandler({
+    path: "/post",
+    secret: process.env.SECRET_KEY
+});
 
-// express-github-webhook導入
-const expressGithubWebhook = require("express-github-webhook");
-const webhookHandler = expressGithubWebhook({ path: "/post", secret: "secret" });
-app.use(webhookHandler);
+http.createServer((req, res) => {
+    handler(req, res, (err) => {
+        res.statusCode = 404;
+        res.end("no such location");
+    });
+}).listen(PORT);
 
-webhookHandler.on("event", (repo, data) => {
-    console.log(`repogitory: ${repo}`);
-    console.log(data);
+handler.on("error", (err) => {
+    console.error("Error: ", err.message);
+});
+
+handler.on("push", (event) => {
+    const payload = event.payload;
+    console.log(payload);
 });
